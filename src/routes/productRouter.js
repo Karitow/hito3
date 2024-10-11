@@ -1,11 +1,10 @@
 import { Router} from 'express';
-import * as productControllers from '../controllers/productController.js'
-
+import { getProducts, createProduct, updateProduct, deleteProduct } from '../controllers/productController.js'
 const router = Router();
 
-router.get('/products', productControllers);
-router.post('/products', productControllers);
-router.put('/products/:id', productControllers);
-router.delete('products/:id', productControllers);
+router.get('/', getProducts);
+router.post('/', createProduct);
+router.put('/:id', updateProduct);
+router.delete('/:id', deleteProdcut);
 
 export default router;
