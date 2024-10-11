@@ -1,15 +1,17 @@
-import express from 'express';
+import express, { json } from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
+import { serverLog } from '../middlewares/index.middleware.js';
 import { cartRouter, orderRouter, productRouter, router, userRouter} from "../routes/indexRoutes.js"
 import errorHandler from '../middlewares/error.middleware.js';
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT ?? 3000
 
 app.use(cors());
 app.use(express.json());
+
+app.use(serverLog);
+
 app.use('/restobuApi/cart',cartRouter);
 app.use('/restobuApi/orders', orderRouter);
 app.use('/restobuApi/products',productRouter);
