@@ -1,13 +1,13 @@
 import db from '../database/db.js';
 
-export const addToCart = (userId, productId, quantity) => {
-  return db('INSERT INTO cart (user_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *;', [userId, productId, quantity]);
+export const addToCart = (usuarioId, productoId, cantidad) => {
+  return db('INSERT INTO carrito (usuario_id, product_id, cantidad) VALUES ($1, $2, $3) RETURNING *;', [usuarioId, productoId, cantidad]);
 };
 
-export const getCart = (userId) => {
-  return db('SELECT * FROM cart WHERE user_id = $1;', [userId]);
+export const getCart = (usuarioId) => {
+  return db('SELECT * FROM carrito WHERE usuario_id = $1;', [usuarioId]);
 };
 
-export const removeFromCart = (userId, productId) => {
-  return db('DELETE FROM cart WHERE user_id = $1 AND product_id = $2 RETURNING *;', [userId, productId]);
+export const removeFromCart = (usuarioId, productoId) => {
+  return db('DELETE FROM carrito WHERE usuario_id = $1 AND producto_id = $2 RETURNING *;', [usuarioId, productoId]);
 };

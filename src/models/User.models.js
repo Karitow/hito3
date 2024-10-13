@@ -1,11 +1,22 @@
-import db from '../database/db.js'
+import db from '../database/db.js';
 
-export const register = ({ nombre, email, contraseña}) => db('INSERT INTO usuarios (id, nombre, email, contraseña) VALUES (DEFAULT, $1, $2, $3);', [nombre, email, contraseña ]);
+export const registerUser = ({ nombre, email, contraseña }) => {
+  return db.query('INSERT INTO Usuarios (nombre, email, contraseña) VALUES ($1, $2, $3) RETURNING *', [nombre, email, contraseña]);
+};
 
-export const login = ({ email}) => db('SELECT email, contraseña FROM usuarios WHERE email=$1;',[email]);
+export const loginUser = (email) => {
+  return db.query('SELECT * FROM Usuarios WHERE email = $1', [email]);
+};
 
-export const findProfile = (email) => db('SELECT id, nombre, email FROM usuarios WHERE email =$1', [email]);
+export const findProfile = (email) => {
+  return db.query('SELECT * FROM Usuarios WHERE email = $1', [email]);
+};
 
-export const deleteProfile = (id) => db('DELETE FROM usuarios WHERE id = $1 RETURNING *;',[id]);
+export const updateProfile = (id, updatedData) => {
+  const { nombre, email, contraseña } = updatedData;
+  return db.query('UPDATE Usuarios SET nombre = $1, email = $2, contraseña = $3 WHERE id = $4 RETURNING *', [nombre, email, contraseña, id]);
+};
 
-export const updateProfile = (id, {nombre, email, contraseña}) => db('UPDATE usuarios SET nombre =$2, email=$3, contraseña=$4 WHERE id=$1;', [id, nombre, email, contraseña])
+export const deleteProfile = (id) => {
+  return db.query('DELETE FROM Usuarios WHERE id = $1 RETURNING *', [id]);
+};

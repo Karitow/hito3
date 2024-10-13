@@ -1,29 +1,18 @@
 import db from '../database/db.js';
 
-// Obtener todos los productos
-export const getProducts = () => {
-  return db.query('SELECT * FROM productos');
+export const createProduct = ({ nombre, descripcion, precio, imagen_url }) => {
+  return db.query('INSERT INTO Productos (nombre, descripcion, precio, imagen_url) VALUES ($1, $2, $3, $4) RETURNING *', [nombre, descripcion, precio, imagen_url]);
 };
 
-// Crear un nuevo producto
-export const createProduct = (product) => {
-  const { title, price, descripcion, stock, imageUrl, categoria } = product;
-  return db.query(
-    'INSERT INTO productos (nombre, descripcion, stock, image_url, categoria) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-    [title, price, descripcion, stock, imageUrl, categoria]
-  );
+export const getProduct = (productId) => {
+  return db.query('SELECT * FROM Productos WHERE id = $1', [productId]);
 };
 
-// Actualizar un producto existente
-export const updateProduct = (id, product) => {
-  const { title, price, description, stock, imageUrl, category } = product;
-  return db.query(
-    'UPDATE products SET title = $1, price = $2, description = $3, stock = $4, image_url = $5, category = $6 WHERE id = $7 RETURNING *',
-    [title, price, description, stock, imageUrl, category, id]
-  );
+export const updateProduct = (productId, updatedData) => {
+  const { nombre, descripcion, precio, imagen_url } = updatedData;
+  return db.query('UPDATE Productos SET nombre = $1, descripcion = $2, precio = $3, imagen_url = $4 WHERE id = $5 RETURNING *', [nombre, descripcion, precio, imagen_url, productId]);
 };
 
-// Eliminar un producto
-export const deleteProduct = (id) => {
-  return db.query('DELETE FROM Productos WHERE id = $1 RETURNING *', [id]);
+export const deleteProduct = (productId) => {
+  return db.query('DELETE FROM Productos WHERE id = $1 RETURNING *', [productId]);
 };

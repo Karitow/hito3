@@ -1,7 +1,7 @@
 import express, { json } from 'express';
 import cors from 'cors';
 import { serverLog } from '../middlewares/index.middleware.js';
-import { cartRouter, orderRouter, productRouter, router, userRouter} from "../routes/indexRoutes.js"
+import { cartRouter, orderRouter, productRouter, router, userRouter} from "../routes/indexRoutes.js";
 import errorHandler from '../middlewares/error.middleware.js';
 
 const app = express();

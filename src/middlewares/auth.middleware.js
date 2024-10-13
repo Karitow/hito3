@@ -13,7 +13,7 @@ export const authToken = (req, res, next) => {
   }
 
   try {
-    req.user = jwtDecode(token);
+    req.usuario = jwtDecode(token);
     jwtVerify(token) && next();
   } catch (error) {
     res.status(401).json({ status: false, code: 401, message: 'Token es inválido' })
